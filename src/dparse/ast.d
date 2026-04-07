@@ -4141,6 +4141,30 @@ unittest // issue #398: Support extern(C++, <string expressions...>)
     checkText(ns[2], `"baz"`);
 }
 
+unittest // issue #526
+{
+    import dparse.formatter, dparse.lexer, dparse.parser, dparse.rollback_allocator;
+    string src = q{enum E : int*[0] { a = int*[0].init }};
+    final class Test : ASTVisitor
+    {
+    }
+    RollbackAllocator ra;
+    auto cf = LexerConfig("", StringBehavior.source);
+    auto ca = StringCache(16);
+    Module m = ParserConfig(getTokensForParser(src, cf, &ca), "", &ra).parseModule();
+    auto t = new Test;
+    t.visit(m);
+    assert(m.declarations.length == 1);
+    auto ed = m.declarations[0].enumDeclaration;
+    assert(ed);
+    auto type = ed.type;
+    auto app = appender!string();
+    auto formatter = new Formatter!(typeof(app))(app);
+    formatter.format(type);
+    assert(app[] == "int*[0]");
+    assert(ed.type.typeSuffixes.length == 2);
+}
+
 unittest // Differentiate between no and empty DDOC comments, e.g. for DDOC unittests
 {
     import dparse.lexer, dparse.parser, dparse.rollback_allocator;
