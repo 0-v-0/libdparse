@@ -4203,7 +4203,7 @@ unittest // Differentiate between no and empty DDOC comments, e.g. for DDOC unit
     assert(visitor.found.length == 6);
 }
 
-unittest // Support GCC-sytle asm statements
+unittest // Support GCC-style asm statements
 {
     static void verify(T)(const string code, void function(scope const T) handler)
     {
