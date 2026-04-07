@@ -5923,18 +5923,31 @@ class Parser
                 break;
             }
         foreach (B; BasicTypes) { case B: }
-            node.basicType = advance();
+        {
+            auto bookmark = setBookmark();
+            auto c = allocator.setCheckpoint();
+            if (auto t = parseType())
+            {
+                abandonBookmark(bookmark);
+                node.type = t;
+            }
+            else
+            {
+                allocator.rollback(c);
+                goToBookmark(bookmark);
+                node.basicType = advance();
+            }
             if (currentIs(tok!"."))
             {
                 advance();
-                const t = expect(tok!"identifier");
-                if (t !is null)
-                    node.primary = *t;
+                if (const ident = expect(tok!"identifier"))
+                    node.primary = *ident;
             }
             else if (currentIs(tok!"("))
                 mixin(parseNodeQ!(`node.arguments`, `Arguments`));
             else goto default;
-            break;
+        }
+        break;
         case tok!"function":
         case tok!"delegate":
         case tok!"{":
