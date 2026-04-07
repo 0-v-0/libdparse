@@ -20,7 +20,7 @@ private immutable operators = [
     "^=", "^^", "^^=", "{", "|", "|=", "||", "}", "~", "~="
 ];
 
-/// Kewords
+/// Keywords
 private immutable keywords = [
     "abstract", "alias", "align", "asm", "assert", "auto", "bool",
     "break", "byte", "case", "cast", "catch", "cdouble", "cent", "cfloat",
