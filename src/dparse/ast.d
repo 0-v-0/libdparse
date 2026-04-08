@@ -4076,6 +4076,25 @@ unittest //#365 : used to segfault
     Module m1 = parseModule(getTokensForParser(src, cf, &ca), "", &ra , &shut);
 }
 
+unittest // issue #520
+{
+    import dparse.lexer, dparse.parser, dparse.rollback_allocator;
+
+    string src = q{void foo(int s =};
+    final class Test : ASTVisitor
+    {
+    }
+
+    static void shut(string, size_t, size_t, string ,bool){}
+
+    RollbackAllocator ra;
+    auto cf = LexerConfig("", StringBehavior.source);
+    auto ca = StringCache(16);
+    Module m = parseModule(getTokensForParser(src, cf, &ca), "", &ra, &shut);
+    auto t = new Test;
+    t.visit(m);
+}
+
 unittest // issue #398: Support extern(C++, <string expressions...>)
 {
     import dparse.lexer : LexerConfig;

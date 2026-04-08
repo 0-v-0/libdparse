@@ -7412,19 +7412,22 @@ class Parser
         auto startIndex = index;
         auto node = allocator.make!TemplateValueParameterDefault;
         mixin(tokenCheck!"=");
-        switch (current.type)
+        if (index < tokens.length)
         {
-        case tok!"__FILE__":
-        case tok!"__FILE_FULL_PATH__":
-        case tok!"__MODULE__":
-        case tok!"__LINE__":
-        case tok!"__FUNCTION__":
-        case tok!"__PRETTY_FUNCTION__":
-            node.token = advance();
-            break;
-        default:
-            mixin(parseNodeQ!(`node.assignExpression`, `AssignExpression`));
-            break;
+            switch (current.type)
+            {
+            case tok!"__FILE__":
+            case tok!"__FILE_FULL_PATH__":
+            case tok!"__MODULE__":
+            case tok!"__LINE__":
+            case tok!"__FUNCTION__":
+            case tok!"__PRETTY_FUNCTION__":
+                node.token = advance();
+                break;
+            default:
+                mixin(parseNodeQ!(`node.assignExpression`, `AssignExpression`));
+                break;
+            }
         }
         node.tokens = tokens[startIndex .. index];
         return node;
