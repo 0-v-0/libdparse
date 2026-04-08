@@ -312,7 +312,10 @@ class Parser
         if (currentIs(tok!"("))
         {
             mixin(tokenCheck!"(");
-            mixin(parseNodeQ!("node.assignExpression", "AssignExpression"));
+            if (currentIs(tok!"default"))
+                advance();
+            else
+                mixin(parseNodeQ!("node.assignExpression", "AssignExpression"));
             mixin(tokenCheck!")");
         }
         node.tokens = tokens[startIndex .. index];
