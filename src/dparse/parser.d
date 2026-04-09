@@ -5848,9 +5848,9 @@ class Parser
      * $(GRAMMAR $(RULEDEF primaryExpression):
      *       $(RULE identifierOrTemplateInstance)
      *     | $(LITERAL '.') $(RULE identifierOrTemplateInstance)
-     *     | $(RULE typeConstructor) $(LITERAL '$(LPAREN)') $(RULE basicType) $(LITERAL '$(RPAREN)') $(LITERAL '.') $(LITERAL Identifier)
-     *     | $(RULE basicType) $(LITERAL '.') $(LITERAL Identifier)
-     *     | $(RULE basicType) $(RULE arguments)
+     *     | $(RULE typeConstructor) $(LITERAL '$(LPAREN)') $(RULE type) $(LITERAL '$(RPAREN)') $(LITERAL '.') $(LITERAL Identifier)
+     *     | $(RULE builtinType) $(RULE typeSuffix)* $(LITERAL '.') $(LITERAL Identifier)
+     *     | $(RULE builtinType) $(RULE typeSuffix)* $(RULE arguments)
      *     | $(RULE typeofExpression)
      *     | $(RULE typeidExpression)
      *     | $(RULE vector)
