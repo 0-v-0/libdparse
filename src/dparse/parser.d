@@ -5924,19 +5924,7 @@ class Parser
             }
         foreach (B; BasicTypes) { case B: }
         {
-            auto bookmark = setBookmark();
-            auto c = allocator.setCheckpoint();
-            if (auto t = parseType())
-            {
-                abandonBookmark(bookmark);
-                node.type = t;
-            }
-            else
-            {
-                allocator.rollback(c);
-                goToBookmark(bookmark);
-                node.basicType = advance();
-            }
+            node.type = parseType();
             if (currentIs(tok!"."))
             {
                 advance();

@@ -2932,6 +2932,14 @@ final class PrimaryExpression : ExpressionNode
     /** */ Arguments arguments;
     /** */ InterpolatedString interpolatedString;
     mixin OpEquals;
+
+    IdType builtinType() inout @property @safe nothrow @nogc pure
+    {
+        if (type)
+            if (auto t2 = type.type2)
+                return t2.builtinType ? t2.builtinType : IdType.init;
+        return IdType.init;
+    }
 }
 
 ///
