@@ -612,6 +612,9 @@ final class AlignAttribute : BaseNode
     }
     mixin OpEquals;
     /** */ ExpressionNode assignExpression;
+    /** */ bool isExplicitDefault() inout @property @safe nothrow @nogc pure {
+        return tokens.length > 2 && tokens[2] == tok!"default";
+    }
 }
 
 ///

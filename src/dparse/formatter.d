@@ -206,7 +206,9 @@ class Formatter(Sink)
         **/
 
         put("align");
-        if (alignAttribute.assignExpression !is null)
+        if (alignAttribute.isExplicitDefault)
+            put("(default)");
+        else if (alignAttribute.assignExpression !is null)
         {
             put("(");
             format(alignAttribute.assignExpression);
@@ -4407,4 +4409,5 @@ z /// Documentation for z
     testFormatNode!(VariableDeclaration)("auto x = i` $(b) is $(b)!`;");
     testFormatNode!(VariableDeclaration)("auto x = iq{ $(b) is $(b)!};");
     testFormatNode!(VariableDeclaration)("auto x = iq{{$('$')}};");
+    testFormatNode!(AlignAttribute)(`align(default) struct S {}`, `align(default)`);
 }
