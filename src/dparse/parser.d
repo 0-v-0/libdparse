@@ -2318,7 +2318,7 @@ class Parser
             warn("Empty declaration");
             advance();
             break;
-    case tok!"{":
+        case tok!"{":
         if (node.attributes.empty)
         {
             error("declaration expected instead of `{`");
