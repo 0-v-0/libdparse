@@ -300,7 +300,9 @@ class Parser
      * Parses an AlignAttribute.
      *
      * $(GRAMMAR $(RULEDEF alignAttribute):
-     *     $(LITERAL 'align') ($(LITERAL '$(LPAREN)') $(RULE assignExpression) $(LITERAL '$(RPAREN)'))?
+     *     $(LITERAL 'align')
+     *     $(LITERAL 'align') $(LITERAL '$(LPAREN)') $(RULE assignExpression) $(LITERAL '$(RPAREN)')
+     *     $(LITERAL 'align') $(LITERAL '$(LPAREN)') $(LITERAL 'default') $(LITERAL '$(RPAREN)')
      *     ;)
      */
     AlignAttribute parseAlignAttribute()
